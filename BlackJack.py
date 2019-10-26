@@ -1,5 +1,7 @@
-import Player
-import Deck
+# import Player
+# import Deck
+from Bank import Deck
+from Player import Player
 
 '''
 Computer Dealer
@@ -14,23 +16,44 @@ Rules: face cards = 10
 Ace: 1 or 11 whatever is more favourable for the player
 '''
 
-#input("Welcome to Sven's BlackJack. Press Key to continue! ")
-deck = Deck.Deck()
-#print ("Card given:{} ".format(deck.getCard()))
-player = Player.Player("Sven")
-#Player needs to make a bet
-player.makeBet()
+# while Player wants to play
+play = True
+while play
 
-dealer = Player.Player("Dealer")
-# Assign first two cards to player
-for x in range(0,2):
-    player.addCard2Hand(deck.getCard())
-player.showHand()
-#Assign next two cards to dealer:
-for x in range(0,2):
-    dealer.addCard2Hand(deck.getCard())
-dealer.showHand()
+    # create card deck
+    deck = Deck()
 
-#  loop until  someone busts
-while True:
-    playerMove = input(f"{player.name}: (H)it or (S)tay? ")
+    # create Players
+    player = Player("Player")
+    dealer = Player("Dealer")
+
+    # Player needs to make an inital bet
+    player.makeBet()
+
+
+    # Assign first two cards to player
+    player.addCard2Hand(deck.getCard(2),deck)
+    player.showHand()
+    # Assign next two cards to dealer:
+    dealer.addCard2Hand(deck.getCard(2),deck)
+    dealer.showHand()
+
+
+    #  loop until  someone wins or busts
+    gameOver=False
+    while not gameOver:
+        playerMove = input(f"{player.name}: (h)it or (s)tay? ")
+        if playerMove == 'h': #hit
+            player.addCard2Hand(deck.getCard(),deck)
+            player.showHand()
+            if player.is_busted():
+                gameOver = True
+            continue
+        else: # stay, it's the dealer's turn until score is higher than the player's or the dealer is busted
+            while deck.winner(player, dealer) == 'Player' and not dealer.is_busted():
+                dealer.addCard2Hand(deck.getCard(),deck)
+            gameOver = True
+
+    print (f"The winner is {deck.winner(player, dealer)}")
+    if input("Play again? (y)es or (n)o? ") == 'n'
+        play = False
