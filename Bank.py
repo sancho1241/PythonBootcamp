@@ -4,6 +4,8 @@ from random import randint
 
 class Bank():
 
+    BLACKJACK = 21
+
     def __init__(self):
         self.faces = ['Jack', 'Queen', 'King']
         values=['2','3','4','5','6','7','8','9','10','Jack','Queen','King','Ace']

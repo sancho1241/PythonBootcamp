@@ -27,7 +27,10 @@ class Player():
         else:
             # subsequent run -> show all cards
             print(self.hand)
-            print("hand value: {}".format(self.value))
+            if self.value != 21:
+                print("hand value: {}".format(self.value))
+            else:
+                print (f"{self.name} has BLACK JACK !!!!")
 
     def makeBet(self):
         while True:
