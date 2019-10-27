@@ -2,7 +2,7 @@ import itertools
 from random import randint
 
 
-class Deck():
+class Bank():
 
     def __init__(self):
         self.faces = ['Jack', 'Queen', 'King']
@@ -10,17 +10,18 @@ class Deck():
         # values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', self.faces, 'Ace']
         colors = ['Diamonds', 'Hearts', 'Spades', 'Clubs']
         self.deck = [x for x in itertools.product(colors, values)]
-        print(f"deck:{self.deck}")
+        #print(f"deck:{self.deck}")
 
         pass
 
     def getCard(self, number=1):
         # select random cards, return them and remove them from deck
         cards = []
+        #print(f"deck length before getting cards: {len(self.deck)}")
         for x in range(0, number):
-            cards.append(self.deck.pop(randint(0, len(self.deck))))
+            cards.append(self.deck.pop(randint(0, len(self.deck)-1)))
             # print(f"random card given: {value}")
-        print("deck  length: {} ".format(len(self.deck)))
+        #eprint("deck  length after getting cards: {} ".format(len(self.deck)))
         return cards
         pass
 
@@ -49,10 +50,14 @@ class Deck():
         dealer.showHand()
 
         if player.is_busted():
+            player.winner = False
             return 'Dealer'
         elif dealer.is_busted():
+            player.winner = True
             return 'Player'
         elif player.value >= dealer.value:
+            player.winner = True
             return 'Player'
         else:
+            player.winner = False
             return 'Dealer'
